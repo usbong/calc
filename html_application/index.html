@@ -159,6 +159,28 @@
   </style>
 
   <script>
+	var sCurrOperand = "";
+	var arrayOperand = [];
+	var arrayOperator = [];
+  
+	function inputDigit(digit) {
+		sCurrOperand=sCurrOperand.concat(digit);
+		//alert(sCurrOperand);
+	}
+
+	function inputOperator(operator) {
+		alert(operator);
+		alert(sCurrOperand);
+	
+		arrayOperator.push(operator);
+		arrayOperand.push(sCurrOperand);
+		sCurrOperand="";
+		
+		//TODO: -add: check if parenthesis sequence is correct; 
+		//otherwise, ERROR
+		//note: parenthesis can also function as multiply
+	}
+  
   </script>
 
   <body id="myBodyId" onload="onLoad();">
@@ -172,30 +194,30 @@
 	<div>
 		<div>
 			<div>
-				<button class="buttonDefault" onclick="">7</button>
-				<button class="buttonDefault" onclick="">8</button>
-				<button class="buttonDefault" onclick="">9</button>
-				<button class="buttonDefault" onclick="">/</button>
-				<button class="buttonDefault" onclick="">(</button>
+				<button class="buttonDefault" onclick="inputDigit(7)">7</button>
+				<button class="buttonDefault" onclick="inputDigit(8)">8</button>
+				<button class="buttonDefault" onclick="inputDigit(9)">9</button>
+				<button class="buttonDefault" onclick="inputOperator('/')">/</button>
+				<button class="buttonDefault" onclick="inputOperator('\(')">(</button>
 			</div>
 			<div>
-				<button class="buttonDefault" onclick="">4</button>
-				<button class="buttonDefault" onclick="">5</button>
-				<button class="buttonDefault" onclick="">6</button>
-				<button class="buttonDefault" onclick="">*</button>
-				<button class="buttonDefault" onclick="">)</button>
+				<button class="buttonDefault" onclick="inputDigit(4)">4</button>
+				<button class="buttonDefault" onclick="inputDigit(5)">5</button>
+				<button class="buttonDefault" onclick="inputDigit(6)">6</button>
+				<button class="buttonDefault" onclick="inputOperator('*')">*</button>
+				<button class="buttonDefault" onclick="inputOperator('\)')">)</button>
 			</div>
 			<div>
-				<button class="buttonDefault" onclick="">1</button>
-				<button class="buttonDefault" onclick="">2</button>
-				<button class="buttonDefault" onclick="">3</button>
-				<button class="buttonDefault" onclick="">-</button>
+				<button class="buttonDefault" onclick="inputDigit(1)">1</button>
+				<button class="buttonDefault" onclick="inputDigit(2)">2</button>
+				<button class="buttonDefault" onclick="inputDigit(3)">3</button>
+				<button class="buttonDefault" onclick="inputOperator('-')">-</button>
 			</div>
 			<div>
-				<button class="buttonZero" onclick="">0</button>
+				<button class="buttonZero" onclick="inputDigit(0)">0</button>
 				<button class="buttonDefault" onclick="">.</button>
-				<button class="buttonDefault" onclick="">+</button>
-				<button class="buttonEquals" onclick="">=</button>
+				<button class="buttonDefault" onclick="inputOperator('+')">+</button>
+				<button class="buttonEquals" onclick="inputOperator('=')">=</button>
 			</div>
 		</div>
 	</div>
