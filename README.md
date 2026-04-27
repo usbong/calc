@@ -6,7 +6,7 @@ Can you make use of your knowledge of HTML5 and Javascript to create a simple ca
 
 1) Create the appereance first. Without yet interactivity.
 
-<img src="https://github.com/usbong/calc/blob/main/screenshots/calcScreenshotV20260427.png" width="60%">
+<img src="https://github.com/usbong/calc/blob/main/screenshots/calcScreenshotV20260427T1507.png" width="60%">
 
 # Get PhilNITS Certified!
 
