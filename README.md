@@ -2,11 +2,15 @@
 
 Can you make use of your knowledge of HTML5 and Javascript to create a simple calculator app that runs on web browers?
 
-# Development Log
+# Development Logs
 
-1) Create the appereance first. Without yet interactivity.
+1) Create the appearance first. Without yet interactivity.
 
 <img src="https://github.com/usbong/calc/blob/main/screenshots/calcScreenshotV20260427T1507.png" width="60%">
+
+2) Add basic arithmetic: Addition, Subtraction, Multiplication, Division
+
+http://store.usbong.ph/server/calc/index.html
 
 # Get PhilNITS Certified!
 
