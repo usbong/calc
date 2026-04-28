@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20260427; from 20251129
+' @date updated: 20260428; from 20260427
 ' @website: www.usbong.ph
 '
 ' References: 
@@ -162,19 +162,213 @@
 	var sCurrOperand = "";
 	var arrayOperand = [];
 	var arrayOperator = [];
+	
+	function onLoad() {
+		var answerInput = document.getElementById("answerInputId");
+		answerInput.value="";
+	}
+	
+	function isOperator(sInput) {
+		//alert ("HERE!!: "+sInput);
+
+		if (sInput.includes("*")) {
+			return true;	
+		}
+		else if (sInput.includes("+")) {
+			return true;	
+		}
+		else if (sInput.includes("-")) {
+			return true;	
+		}
+		else if (sInput.includes("/")) {
+			return true;	
+		}
+		else if (sInput.includes("(")) {
+			return true;	
+		}
+		else if (sInput.includes(")")) {
+			return true;	
+		}
+
+		//alert("END!!");
+		
+		return false;	
+	}
+	
+	//TODO: -update: this
+	function backspace() {
+		var answerInput = document.getElementById("answerInputId");
+		
+		//alert (">!!!");
+		
+		if (isOperator(answerInput.value.at(-1))) {
+
+			//alert (">> Operator !!!");
+
+			if (arrayOperator.length>0) {	
+				arrayOperator.pop();
+
+				sCurrOperand = answerInput.value.substring(0,answerInput.value.length-1);
+			}
+			
+			answerInput.value = sCurrOperand;
+		}
+		else {
+
+			//alert (">> Operand !!!");
+			//alert(arrayOperand.length);
+
+			//not empty
+			if (arrayOperand.length>0) {
+				//alert ("DITO!!!");
+			
+				sCurrOperand = arrayOperand.pop();
+				
+				//alert("BEFORE sCurrOperand: "+sCurrOperand);
+				
+				answerInput.value = answerInput.value.substring(0,answerInput.value.length-sCurrOperand.length);
+				
+				//alert("answerInput.value: "+answerInput.value);
+				
+				sCurrOperand = sCurrOperand.substring(0,sCurrOperand.length-1);
+				
+				arrayOperand.push(sCurrOperand);
+				
+				//alert("AFTER sCurrOperand: "+sCurrOperand);
+				
+				sCurrOperand = answerInput.value+sCurrOperand;
+			}
+			else {
+				sCurrOperand = answerInput.value.substring(0,answerInput.value.length-1);
+			}
+
+			//sCurrOperand = sCurrOperand.substring(0,sCurrOperand.length-1);
+			
+			answerInput.value = sCurrOperand;
+		}		
+		//answerInput.value=answerInput.value.substring(0,answerInput.value.length-1);
+		//answerInput.value = sCurrOperand;
+	}
   
 	function inputDigit(digit) {
+		var answerInput = document.getElementById("answerInputId");
+		
+		if (arrayOperator.at(-1)=="=") { //peek last element
+			sCurrOperand="";
+			arrayOperator.pop();
+			answerInput.value="";
+			arrayOperator = [];
+			arrayOperand = [];
+		}
+		
 		sCurrOperand=sCurrOperand.concat(digit);
 		//alert(sCurrOperand);
+
+		answerInput.value=answerInput.value.concat(digit);
+		//alert(answerInput);
 	}
 
-	function inputOperator(operator) {
-		alert(operator);
-		alert(sCurrOperand);
+	function inputOperator(sOperator) {
+		var answerInput = document.getElementById("answerInputId");
+
+		//alert(sOperator);
+		//alert(sCurrOperand);
+		
+		//TODO: -update: to use PEMDAS
+		if (!sOperator.includes("=")) {
+			//if not empty
+			if (arrayOperand.length>0) {
+				if (arrayOperator.at(-1)=="=") { //peek last element
+					arrayOperator.pop();
+				}
+				else {
+					return;
+				}
+			}
+		}
+		
+		//alert (parseFloat("00003"));
+		
+		//arrayOperator.push(sOperator);
+		arrayOperand.push(parseFloat(sCurrOperand));
+		sCurrOperand="";		
+		
+		if (sOperator.includes("=")) {
+			//arrayOperator.reverse();
+		
+			//alert(arrayOperand.pop());
+			var operandOne = arrayOperand.pop();
+			var operandTwo = arrayOperand.pop();
+			var sCurrOperator = arrayOperator.pop();
+
+			var sAnswer = "";
+			var fAnswer = 0.0;
+						
+			//TODO: -add: PEMDAS
+			if (sCurrOperator.includes("*")) {
+				//alert (operandOne);
+				//alert (operandTwo);
+			
+				fAnswer = parseFloat(operandOne)*parseFloat(operandTwo);
+				//alert(fAnswer);
+				
+				sAnswer = fAnswer;
+				
+				//alert("fAnswer: "+fAnswer);
+				//alert("sAnswer: "+sAnswer);
+				
+				//arrayOperand.push(sAnswer);
+				//alert("operand!: "+arrayOperand.at(-1));
+				
+				sCurrOperand=sAnswer;
+				arrayOperand.push(sCurrOperand);
+
+				arrayOperator.push("=");
+			}
+			else if (sCurrOperator.includes("+")) {
+				fAnswer = parseFloat(operandOne)+parseFloat(operandTwo);
+				sAnswer = fAnswer;
+				sCurrOperand=sAnswer;
+				arrayOperand.push(sCurrOperand);
+				arrayOperator.push("=");
+			}
+			else if (sCurrOperator.includes("-")) {
+				//note order of operands; reversed;
+				fAnswer = -parseFloat(operandOne)+parseFloat(operandTwo);
+				sAnswer = fAnswer;
+				sCurrOperand=sAnswer;
+				arrayOperand.push(sCurrOperand);
+				arrayOperator.push("=");
+			}
+			else if (sCurrOperator.includes("/")) {
+				//note order of operands; reversed;
+				//fAnswer = parseFloat(operandOne)/parseFloat(operandTwo);
+				fAnswer = parseFloat(operandTwo)/parseFloat(operandOne);
+				sAnswer = fAnswer;
+				sCurrOperand=sAnswer;
+				arrayOperand.push(sCurrOperand);
+				arrayOperator.push("=");
+			}
+			
+			answerInput.value=sAnswer;
+						
+			//alert("HALLO!: "+arrayOperator.pop());
+
+			return;
+		}
+		else {
+			//alert ("DITO!!: "+sOperator);
+		
+			arrayOperator.push(sOperator);
+			
+			answerInput.value=answerInput.value.concat(""+sOperator);
+			
+			//alert("answerInput: "+answerInput);
+		}
 	
-		arrayOperator.push(operator);
-		arrayOperand.push(sCurrOperand);
-		sCurrOperand="";
+//		arrayOperator.push(sOperator);
+//		arrayOperand.push(sCurrOperand);
+//		sCurrOperand="";
 		
 		//TODO: -add: check if parenthesis sequence is correct; 
 		//otherwise, ERROR
@@ -188,7 +382,10 @@
 	<canvas id="myCanvasId" class="myCanvas">
 	</canvas>
 -->
-	<input type="tel" id="answerParam" class="inputAnswer" value="0" min="-99999" max="99999" required>
+	<input type="text" id="answerInputId" class="inputAnswer" value="0" min="-99999" max="99999" required>
+<!--	
+	<button class="buttonBackspace" onclick="backspace()">Back<br/>Space</button>
+-->
 	<button class="buttonBackspace" onclick="">Back<br/>Space</button>
 	
 	<div>
@@ -198,14 +395,20 @@
 				<button class="buttonDefault" onclick="inputDigit(8)">8</button>
 				<button class="buttonDefault" onclick="inputDigit(9)">9</button>
 				<button class="buttonDefault" onclick="inputOperator('/')">/</button>
+<!--				
 				<button class="buttonDefault" onclick="inputOperator('\(')">(</button>
+-->
+				<button class="buttonDefault" onclick="">(</button>
 			</div>
 			<div>
 				<button class="buttonDefault" onclick="inputDigit(4)">4</button>
 				<button class="buttonDefault" onclick="inputDigit(5)">5</button>
 				<button class="buttonDefault" onclick="inputDigit(6)">6</button>
 				<button class="buttonDefault" onclick="inputOperator('*')">*</button>
+<!--				
 				<button class="buttonDefault" onclick="inputOperator('\)')">)</button>
+-->
+				<button class="buttonDefault" onclick="">)</button>
 			</div>
 			<div>
 				<button class="buttonDefault" onclick="inputDigit(1)">1</button>
