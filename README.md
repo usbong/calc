@@ -10,6 +10,10 @@ Can you make use of your knowledge of HTML5 and Javascript to create a simple ca
 
 2) Add basic arithmetic: Addition, Subtraction, Multiplication, Division
 
+http://store.usbong.ph/server/calc/index20260428.html
+
+3) Current Version
+
 http://store.usbong.ph/server/calc/index.html
 
 # Get PhilNITS Certified!
