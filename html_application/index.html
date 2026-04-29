@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20260428; from 20260427
+' @date updated: 20260429; from 20260428
 ' @website: www.usbong.ph
 '
 ' References: 
@@ -218,14 +218,87 @@
 			//alert (">> Operand !!!");
 			//alert(arrayOperand.length);
 
+			sCurrDigit = answerInput.value.substring(answerInput.value.length-1,answerInput.value.length);
+
+			//sCurrAnswerInput = answerInput.value.substring(0,answerInput.value.length-1);
+			
+			sCurrAnswerInput = answerInput.value;
+
+			//alert("sCurrDigit: "+sCurrDigit);
+
+			//alert("sCurrAnswerInput: "+sCurrAnswerInput);
+
 			//not empty
 			if (arrayOperand.length>0) {
 				//alert ("DITO!!!");
 			
-				sCurrOperand = arrayOperand.pop();
+				//sCurrOperand = arrayOperand.pop();
+				sCurrOperandInArray = arrayOperand.at(-1).toString();
+				//sCurrOperandInArray = arrayOperand.pop();
 				
-				//alert("BEFORE sCurrOperand: "+sCurrOperand);
+				//alert("sCurrOperandInArray: "+sCurrOperandInArray);
+				//alert(sCurrOperandInArray==sCurrDigit);
 				
+				if (sCurrOperandInArray==sCurrDigit) {
+					arrayOperand.pop();
+				}
+				else {
+					//alert("DITO!!!");
+
+					//check first if sCurrAnswerInput has some digits not in the operand array
+					
+					sCurrOperandInAnswerInput = "";
+					
+					if ((arrayOperator.length > 0) && (arrayOperator.at(-1)!=="=")) {
+						//alert("HERE!! "+arrayOperator.at(-1));
+
+						sCurrOperandInAnswerInput=sCurrAnswerInput.slice(-sCurrAnswerInput.lastIndexOf(arrayOperator.at(-1)))
+						
+						//alert ("sCurrOperandInAnswerInput: "+sCurrOperandInAnswerInput);
+					}
+					
+					//alert (">");
+
+					if (sCurrOperandInAnswerInput.length > 0) {
+						//OK
+						//alert (">> OK: "+sCurrOperandInAnswerInput);
+						
+						//alert("sCurrOperand: "+sCurrOperand);
+						
+						//answerInput = sCurrOperand;
+					}
+					//if none, remove the last digit of the last element in the operand array
+					else {
+
+						//alert (">> REMOVE");
+
+						sCurrOperand = arrayOperand.pop().toString();
+
+						//alert (">>> REMOVE: "+sCurrOperandInArray);
+						
+						//alert("sCurrOperandInArray.length: "+sCurrOperandInArray.length);
+						
+						//alert ("--: "+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
+						
+						arrayOperand.push(sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
+
+						//alert (">>>> REMOVE");
+						
+						//alert("sCurrOperand: "+sCurrOperand);
+					}
+/*					
+alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
+					*/					
+				}
+/*
+				sCurrOperand = sCurrOperand.substring(0,sCurrOperand.length-1);
+
+				sCurrAnswerInput = answerInput.value.substring(0,answerInput.value.length-1);
+				
+				answerInput.value = sCurrAnswerInput;
+*/				
+				
+/*				
 				answerInput.value = answerInput.value.substring(0,answerInput.value.length-sCurrOperand.length);
 				
 				//alert("answerInput.value: "+answerInput.value);
@@ -237,14 +310,26 @@
 				//alert("AFTER sCurrOperand: "+sCurrOperand);
 				
 				sCurrOperand = answerInput.value+sCurrOperand;
+				
+				alert("AFTER sCurrOperand: "+sCurrOperand);
+*/
 			}
 			else {
-				sCurrOperand = answerInput.value.substring(0,answerInput.value.length-1);
+/*				
+				sCurrOperand = answerInput.value.substring(0,answerInput.value.length-1);			
+*/				
 			}
 
+			sCurrOperand = sCurrOperand.substring(0,sCurrOperand.length-1);
+
+			sCurrAnswerInput = answerInput.value.substring(0,answerInput.value.length-1);
+			
+			answerInput.value = sCurrAnswerInput;
+				
+			
 			//sCurrOperand = sCurrOperand.substring(0,sCurrOperand.length-1);
 			
-			answerInput.value = sCurrOperand;
+			//answerInput.value = sCurrOperand;
 		}		
 		//answerInput.value=answerInput.value.substring(0,answerInput.value.length-1);
 		//answerInput.value = sCurrOperand;
@@ -267,12 +352,39 @@
 		answerInput.value=answerInput.value.concat(digit);
 		//alert(answerInput);
 	}
+	
+	//added by Mike, 20260429
+	function reset() {
+		var answerInput = document.getElementById("answerInputId");
+
+		sCurrOperand="";
+		arrayOperator.pop();
+		answerInput.value="";
+		arrayOperator = [];
+		arrayOperand = [];
+	}
 
 	function inputOperator(sOperator) {
 		var answerInput = document.getElementById("answerInputId");
 
 		//alert(sOperator);
 		//alert(sCurrOperand);
+		
+		//added by Mike, 20260429
+		//enter an operand first
+		//alert(arrayOperand.length);
+		if (arrayOperand.length==0) {
+			if (answerInput.value.length==0) {
+				return;
+			}
+		}
+
+		if (answerInput.value.includes("Err")) {
+			//reset
+			reset();
+			
+			return;
+		}	
 		
 		//TODO: -update: to use PEMDAS
 		if (!sOperator.includes("=")) {
@@ -294,8 +406,6 @@
 		sCurrOperand="";		
 		
 		if (sOperator.includes("=")) {
-			//arrayOperator.reverse();
-		
 			//alert(arrayOperand.pop());
 			var operandOne = arrayOperand.pop();
 			var operandTwo = arrayOperand.pop();
@@ -351,10 +461,26 @@
 			}
 			
 			answerInput.value=sAnswer;
-						
+
+/*			
+			//added by Mike, 20260429
+			//alert (answerInput.value);
+		
+			if (answerInput.value.includes("NaN")) {
+				answerInput.value = "Err"; //Error
+				
+				//reset
+				sCurrOperand="";
+				arrayOperator.pop();
+				//answerInput.value="";
+				arrayOperator = [];
+				arrayOperand = [];
+			}
+			
 			//alert("HALLO!: "+arrayOperator.pop());
 
 			return;
+*/			
 		}
 		else {
 			//alert ("DITO!!: "+sOperator);
@@ -366,6 +492,23 @@
 			//alert("answerInput: "+answerInput);
 		}
 	
+		//added by Mike, 20260429
+		//alert (answerInput.value);
+	
+		if (answerInput.value.includes("NaN")) {
+			//reset
+			reset();
+/*
+			sCurrOperand="";
+			arrayOperator.pop();
+			//answerInput.value="";
+			arrayOperator = [];
+			arrayOperand = [];
+*/			
+			answerInput.value = "Err"; //Error
+		}
+
+	
 //		arrayOperator.push(sOperator);
 //		arrayOperand.push(sCurrOperand);
 //		sCurrOperand="";
@@ -374,6 +517,8 @@
 		//otherwise, ERROR
 		//note: parenthesis can also function as multiply
 	}
+  
+	
   
   </script>
 
@@ -386,7 +531,7 @@
 <!--	
 	<button class="buttonBackspace" onclick="backspace()">Back<br/>Space</button>
 -->
-	<button class="buttonBackspace" onclick="">Back<br/>Space</button>
+	<button class="buttonBackspace" onclick="backspace()">Back<br/>Space</button>
 	
 	<div>
 		<div>
