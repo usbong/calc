@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20260429; from 20260428
+' @date updated: 20260430; from 20260429
 ' @website: www.usbong.ph
 '
 ' References: 
@@ -91,6 +91,11 @@
 
 		button.buttonBackspace
 		{
+			position: absolute;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+  		
 			width: 42px;
 			height: 40px;
 
@@ -142,7 +147,7 @@
 		button.buttonEquals
 		{
 			position: absolute;
-			top: 136.5px;
+			top: 136px;
 			left: 176px; /* 4*40+4*4 */
 			display: inline-flex;
 			align-items: center;
@@ -178,7 +183,7 @@
 	function isOperator(sInput) {
 		//alert ("HERE!!: "+sInput);
 
-		if (sInput.includes("*")) {
+		if (sInput.includes("×")) { //*
 			return true;	
 		}
 		else if (sInput.includes("+")) {
@@ -187,7 +192,7 @@
 		else if (sInput.includes("-")) {
 			return true;	
 		}
-		else if (sInput.includes("/")) {
+		else if (sInput.includes("÷")) { ///
 			return true;	
 		}
 		else if (sInput.includes("(")) {
@@ -205,8 +210,26 @@
 	//TODO: -update: this
 	function backspace() {
 		var answerInput = document.getElementById("answerInputId");
+		var backspaceButton = document.getElementById("backspaceButtonId");
 		
-		//alert (">!!!");
+		//added by Mike, 20260430
+		if (backspaceButton.innerHTML.includes("Clear")) {
+			reset();
+			backspaceButton.innerHTML = "Back<br/>Space";
+		}
+		
+		//alert (">!!!: "+sCurrOperand);
+		
+		//added by Mike, 20260430
+		//caution; sCurrOperand might be a float, instead of a string; 
+		//sCurrOperand=sCurrOperand.toString();
+		
+		//added by Mike, 20260430
+		//alert(answerInput.value.length);
+		if (answerInput.value.length==0) {
+			//alert("ZERO!!");
+			return;
+		}		
 		
 		if (isOperator(answerInput.value.at(-1))) {
 
@@ -224,7 +247,7 @@
 
 			//alert (">> Operand !!!");
 			//alert(arrayOperand.length);
-
+			
 			sCurrDigit = answerInput.value.substring(answerInput.value.length-1,answerInput.value.length);
 
 			//sCurrAnswerInput = answerInput.value.substring(0,answerInput.value.length-1);
@@ -248,6 +271,8 @@
 				
 				if (sCurrOperandInArray==sCurrDigit) {
 					arrayOperand.pop();
+					
+					//alert("arrayOperand.pop()");
 				}
 				else {
 					//alert("DITO!!!");
@@ -327,15 +352,23 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 */				
 			}
 
+			//alert(">: "+sCurrOperand.toString().length);
+
 			sCurrOperand = sCurrOperand.substring(0,sCurrOperand.length-1);
 
+			//alert(">>");
+
 			sCurrAnswerInput = answerInput.value.substring(0,answerInput.value.length-1);
+
+			//alert(">>>");
 			
 			answerInput.value = sCurrAnswerInput;
 				
+			//alert("sCurrOperand: "+sCurrOperand);
+			//alert("sCurrAnswerInput: "+sCurrAnswerInput);
+			
 			
 			//sCurrOperand = sCurrOperand.substring(0,sCurrOperand.length-1);
-			
 			//answerInput.value = sCurrOperand;
 		}		
 		//answerInput.value=answerInput.value.substring(0,answerInput.value.length-1);
@@ -344,6 +377,27 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
   
 	function inputDigit(digit) {
 		var answerInput = document.getElementById("answerInputId");
+		var backspaceButton = document.getElementById("backspaceButtonId");
+		
+		//added by Mike, 20260430
+		if (backspaceButton.innerHTML.includes("Clear")) {
+			//reset();
+			backspaceButton.innerHTML = "Back<br/>Space";
+/*			
+			//added by Mike, 20260430
+			if (answerInput.value=="0") {
+				sCurrOperand=digit;
+				answerInput.value=digit;
+				return;
+			}
+*/			
+		}
+
+		//added by Mike, 20260430
+		//only one "." can be added
+		if ((digit==".") && (sCurrOperand.includes("."))) {
+			return;
+		}
 		
 		if (arrayOperator.at(-1)=="=") { //peek last element
 			sCurrOperand="";
@@ -351,6 +405,14 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 			answerInput.value="";
 			arrayOperator = [];
 			arrayOperand = [];
+		}
+
+		//added by Mike, 20260430
+////		if (answerInput.value.length>10) {
+////			//max 11 operands and operators including the decimal point 
+		if (answerInput.value.length>12) {
+			//max 13 operands and operators including the decimal point 
+			return;
 		}
 		
 		sCurrOperand=sCurrOperand.concat(digit);
@@ -373,7 +435,14 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 
 	function inputOperator(sOperator) {
 		var answerInput = document.getElementById("answerInputId");
-
+		var backspaceButton = document.getElementById("backspaceButtonId");
+		
+		//added by Mike, 20260430
+		if (backspaceButton.innerHTML.includes("Clear")) {
+			//reset();
+			backspaceButton.innerHTML = "Back<br/>Space";
+		}
+		
 		//alert(sOperator);
 		//alert(sCurrOperand);
 		
@@ -385,6 +454,13 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 				return;
 			}
 		}
+		
+		//added by Mike, 20260430
+		if ((arrayOperand.length==1) && (arrayOperand.at(-1)==".")) { //peek last element
+			if ((answerInput.value.length==1) && (answerInput.value.at(-1)==".")) { //peek last element
+				return;
+			}
+		}
 
 		if (answerInput.value.includes("Err")) {
 			//reset
@@ -392,6 +468,8 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 			
 			return;
 		}	
+		
+		//alert("DITO!!");
 		
 		//TODO: -update: to use PEMDAS
 		if (!sOperator.includes("=")) {
@@ -401,10 +479,17 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 					arrayOperator.pop();
 				}
 				else {
-					return;
+					//edited by Mike, 20260430
+					//reverify this;
+					//return;
+					if (arrayOperator.length>0) {
+						return;
+					}
 				}
 			}
 		}
+		
+		//alert(">>>>: "+parseFloat(sCurrOperand));
 		
 		//alert (parseFloat("00003"));
 		
@@ -422,14 +507,15 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 			var fAnswer = 0.0;
 						
 			//TODO: -add: PEMDAS
-			if (sCurrOperator.includes("*")) {
+			//if (sCurrOperator.includes("*")) {
+			if (sCurrOperator.includes("×")) {
 				//alert (operandOne);
 				//alert (operandTwo);
 			
 				fAnswer = parseFloat(operandOne)*parseFloat(operandTwo);
 				//alert(fAnswer);
 				
-				sAnswer = fAnswer;
+				sAnswer = fAnswer.toString();
 				
 				//alert("fAnswer: "+fAnswer);
 				//alert("sAnswer: "+sAnswer);
@@ -444,7 +530,7 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 			}
 			else if (sCurrOperator.includes("+")) {
 				fAnswer = parseFloat(operandOne)+parseFloat(operandTwo);
-				sAnswer = fAnswer;
+				sAnswer = fAnswer.toString();
 				sCurrOperand=sAnswer;
 				arrayOperand.push(sCurrOperand);
 				arrayOperator.push("=");
@@ -452,22 +538,38 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 			else if (sCurrOperator.includes("-")) {
 				//note order of operands; reversed;
 				fAnswer = -parseFloat(operandOne)+parseFloat(operandTwo);
-				sAnswer = fAnswer;
+				sAnswer = fAnswer.toString();
 				sCurrOperand=sAnswer;
 				arrayOperand.push(sCurrOperand);
 				arrayOperator.push("=");
 			}
-			else if (sCurrOperator.includes("/")) {
+			//else if (sCurrOperator.includes("/")) {
+			else if (sCurrOperator.includes("÷")) {
 				//note order of operands; reversed;
 				//fAnswer = parseFloat(operandOne)/parseFloat(operandTwo);
 				fAnswer = parseFloat(operandTwo)/parseFloat(operandOne);
-				sAnswer = fAnswer;
+				sAnswer = fAnswer.toString();
 				sCurrOperand=sAnswer;
 				arrayOperand.push(sCurrOperand);
 				arrayOperator.push("=");
 			}
 			
+			//added by Mike, 20260430
+			if (sAnswer.includes(".")) {
+				//alert(">HERE: "+answerInput.value);
+				if (sAnswer.length>10) {
+					//11 digits including the decimal point
+					sAnswer=sAnswer.substring(0,11); 
+					//alert(">>HERE: "+answerInput.value);
+				}
+			}
+			
 			answerInput.value=sAnswer;
+			
+			//added by Mike, 20260430
+			backspaceButton.innerHTML = "Clear";
+			
+			
 
 /*			
 			//added by Mike, 20260429
@@ -503,16 +605,18 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 		//alert (answerInput.value);
 	
 		if (answerInput.value.includes("NaN")) {
-			//reset
 			reset();
-/*
-			sCurrOperand="";
-			arrayOperator.pop();
-			//answerInput.value="";
-			arrayOperator = [];
-			arrayOperand = [];
-*/			
-			answerInput.value = "Err"; //Error
+			
+			//alert("operandOne: "+operandOne);
+			//alert("operandTwo: "+operandTwo);
+			
+			//NaN was caused by an operand whose value is only "."
+			if ((Number.isNaN(operandOne)) || (Number.isNaN(operandTwo))) {
+				answerInput.value = "0";
+			}
+			else {
+				answerInput.value = "Err"; //Error
+			}
 		}
 
 	
@@ -538,7 +642,7 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 <!--	
 	<button class="buttonBackspace" onclick="backspace()">Back<br/>Space</button>
 -->
-	<button class="buttonBackspace" onclick="backspace()">Back<br/>Space</button>
+	<button id="backspaceButtonId" class="buttonBackspace" onclick="backspace()">Back<br/>Space</button>
 	
 	<div>
 		<div>
@@ -546,7 +650,7 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 				<button class="buttonDefault" onclick="inputDigit(7)">7</button>
 				<button class="buttonDefault" onclick="inputDigit(8)">8</button>
 				<button class="buttonDefault" onclick="inputDigit(9)">9</button>
-				<button class="buttonDefault" onclick="inputOperator('/')">/</button>
+				<button class="buttonDefault" onclick="inputOperator('÷')">÷</button>
 <!--				
 				<button class="buttonDefault" onclick="inputOperator('\(')">(</button>
 -->
@@ -556,7 +660,7 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 				<button class="buttonDefault" onclick="inputDigit(4)">4</button>
 				<button class="buttonDefault" onclick="inputDigit(5)">5</button>
 				<button class="buttonDefault" onclick="inputDigit(6)">6</button>
-				<button class="buttonDefault" onclick="inputOperator('*')">*</button>
+				<button class="buttonDefault" onclick="inputOperator('×')">×</button>
 <!--				
 				<button class="buttonDefault" onclick="inputOperator('\)')">)</button>
 -->
@@ -570,7 +674,7 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 			</div>
 			<div>
 				<button class="buttonZero" onclick="inputDigit(0)">0</button>
-				<button class="buttonDefault" onclick="">.</button>
+				<button class="buttonDefault" onclick="inputDigit('.')">.</button>
 				<button class="buttonDefault" onclick="inputOperator('+')">+</button>
 				<button class="buttonEquals" onclick="inputOperator('=')">=</button>
 			</div>
