@@ -21,7 +21,7 @@ Add basic arithmetic: Addition, Subtraction, Multiplication, Division
 
 +fixed: error when operator is added before adding any operand
 
-5) 20260430 (CURRENT); http://store.usbong.ph/server/calc/index.html
+4) 20260430; http://store.usbong.ph/server/calc/index20260430.html
 
 <img src="https://github.com/usbong/calc/blob/main/screenshots/calcScreenshotV20260430T1447.png" width="60%">
 
@@ -42,6 +42,13 @@ Add basic arithmetic: Addition, Subtraction, Multiplication, Division
 +updated: multiply symbol to "÷"
 
 +updated: equals button position to "136px;" from "136.5px;"
+
+5) 20260501 (CURRENT); http://store.usbong.ph/server/calc/index.html
+
++added: current operator can be changed at its position
+
++set: temporarily input box to read-only to prevent intentional or inadvertent entering of text via keyboard 
+
 
 # Get PhilNITS Certified!
 
