@@ -43,11 +43,29 @@ Add basic arithmetic: Addition, Subtraction, Multiplication, Division
 
 +updated: equals button position to "136px;" from "136.5px;"
 
-5) 20260501 (CURRENT); http://store.usbong.ph/server/calc/index.html
+5) 20260501; http://store.usbong.ph/server/calc/index20260501.html
 
 +added: current operator can be changed at its position
 
 +set: temporarily input box to read-only to prevent intentional or inadvertent entering of text via keyboard 
+
+6) 20260502 (CURRENT); http://store.usbong.ph/server/calc/index.html
+
++fixed: pressing equals button multiple times causes next arithmetic operation to result to zero
+
++removed: reset function via pressing equals button; instead, use "Clear" button
+
++fixed: certain sequences that lead to incorrect output; 
+
+**Examples:** `3*/B*` error, `5*60=*B==/2` error
+
++added: changeable number signs
+
++fixed: `3/=5`; previously resulted to `05`; now results to `5`
+
+TODO: -fix: `3*-` becomes `3`, instead of `3*`
+
+TODO: -fix: `-*B` now removes both `-*`
 
 
 # Get PhilNITS Certified!
