@@ -63,7 +63,7 @@ Add basic arithmetic: Addition, Subtraction, Multiplication, Division
 
 +fixed: `3/=5`; previously resulted to `05`; now results to `5`
 
-TODO: -fix: `3*-` becomes `3`, instead of `3*`
+TODO: -fix: `3*-B` becomes `3`, instead of `3*`
 
 TODO: -fix: `-*B` now removes both `-*`
 
