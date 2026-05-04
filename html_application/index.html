@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20260502; from 20260501
+' @date updated: 20260504; from 20260502
 ' @website: www.usbong.ph
 '
 ' References: 
@@ -278,19 +278,42 @@
 			}
 */
 			if (isOperator(answerInput.value.at(-2))) {
-				if (arrayOperator.length>0) {	
-					arrayOperator.pop();
+				if (arrayOperator.length>0) {
+					//arrayOperator.pop();
 					
 					//alert("DITO!!!!!!!: "+arrayOperator.at(-1));
 
+					//sCurrOperand = answerInput.value.substring(0,answerInput.value.length-2);
+					
 					sCurrOperand = answerInput.value.substring(0,answerInput.value.length-2);
-										
-					//alert("DITOsCurrOperand: "+sCurrOperand);
+/*										
+					alert("DITOsCurrOperand: "+sCurrOperand);
+					alert("arrayOperand.at(-1): "+arrayOperand.at(-1));
+*/					
 				}
 
-				answerInput.value = sCurrOperand;//.concat(arrayOperator.at(-1));
+				//answerInput.value = sCurrOperand;
+				answerInput.value = sCurrOperand.concat(arrayOperator.at(-1));
+
+				//added by Mike, 20260504
+				if (!arrayOperator.at(-1).includes(sCurrOperand)) {
 				
-				//alert("answerInput.value: "+answerInput.value);
+					//alert("DITO!!!");
+				
+					sCurrOperand = "";
+				}
+/*
+				else {
+					alert("sCurrOperand: "+sCurrOperand);
+					//arrayOperand
+				}
+*/
+				
+/*				
+				alert("answerInput.value: "+answerInput.value);
+				alert("arrayOperator.at(-1): "+arrayOperator.at(-1));
+				alert("arrayOperand.at(-1): "+arrayOperand.at(-1));
+*/				
 			}
 			else {
 				if (arrayOperator.length>0) {	
@@ -489,6 +512,7 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 		}
 		
 		sCurrOperand=sCurrOperand.concat(digit);
+		
 		//alert(sCurrOperand);
 
 		answerInput.value=answerInput.value.concat(digit);
@@ -646,7 +670,6 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 			
 			//added by Mike, 20260430
 			backspaceButton.innerHTML = "Clear";
-			
 			
 
 /*			
@@ -823,6 +846,7 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 						
 						arrayOperator.push(sOperator);
 					}
+					
 /*					//removed by Mike, 20260502					
 					else {
 
@@ -874,7 +898,6 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 
 			var sAnswer = "";
 			var fAnswer = 0.0;
-
 /*			
 			alert("DITO!!!");
 			alert("sCurrOperator: "+sCurrOperator);
@@ -969,10 +992,19 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 		}
 		else {
 			//alert ("DITO!!: "+sOperator);
+			//alert(answerInput.value.at(-1));
 		
-			arrayOperator.push(sOperator);
-			
-			answerInput.value=answerInput.value.concat(""+sOperator);
+			if (answerInput.value.at(-1)=="-") {
+				arrayOperator.pop();
+				answerInput.value=answerInput.value.substring(0,answerInput.value.length-1);
+				reset();
+				
+				//alert(answerInput.value);
+			}
+			else {
+				arrayOperator.push(sOperator);
+				answerInput.value=answerInput.value.concat(""+sOperator);
+			}
 			
 			//alert("answerInput: "+answerInput);
 		}
