@@ -49,7 +49,7 @@ Add basic arithmetic: Addition, Subtraction, Multiplication, Division
 
 +set: temporarily input box to read-only to prevent intentional or inadvertent entering of text via keyboard 
 
-6) 20260502 (CURRENT); http://store.usbong.ph/server/calc/index.html
+7) 20260502 (CURRENT); http://store.usbong.ph/server/calc/index20260502.html
 
 +fixed: pressing equals button multiple times causes next arithmetic operation to result to zero
 
@@ -66,6 +66,20 @@ Add basic arithmetic: Addition, Subtraction, Multiplication, Division
 TODO: -fix: `3*-B` becomes `3`, instead of `3*`
 
 TODO: -fix: `-*B` now removes both `-*`
+
+8) 20260504 (CURRENT); http://store.usbong.ph/server/calc/index.html
+
+fixed: `3*-B` becomes `3`, instead of `3*`
+
+fixed: `-*B` now removes both `-*`; `-*` already results to `<blank>`
+
+fixed: `-*` should result to `<blank>`
+
+fixed: backspace in `3x-` incorrectly results to `3` instead of `3x`
+
+TODO: -add: PEMDAS
+
+<img src="https://github.com/usbong/calc/blob/main/plan/pemdasPlan20260504.jpg" width="60%">
 
 
 # Get PhilNITS Certified!
