@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20260504; from 20260502
+' @date updated: 20260505; from 20260504
 ' @website: www.usbong.ph
 '
 ' References: 
@@ -534,202 +534,8 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 		arrayOperandTemp = [];
 	}
 	
-	//edited by Mike, 20260501
+
 	function inputOperatorPREV(sOperator) {
-		var answerInput = document.getElementById("answerInputId");
-		var backspaceButton = document.getElementById("backspaceButtonId");
-		
-		//added by Mike, 20260430
-		if (backspaceButton.innerHTML.includes("Clear")) {
-			//reset();
-			backspaceButton.innerHTML = "Back<br/>Space";
-		}
-		
-		//alert(sOperator);
-		//alert(sCurrOperand);
-		
-		//added by Mike, 20260429
-		//enter an operand first
-		//alert(arrayOperand.length);
-		if (arrayOperand.length==0) {
-			if (answerInput.value.length==0) {
-				return;
-			}
-		}
-		
-		//added by Mike, 20260430
-		if ((arrayOperand.length==1) && (arrayOperand.at(-1)==".")) { //peek last element
-			if ((answerInput.value.length==1) && (answerInput.value.at(-1)==".")) { //peek last element
-				return;
-			}
-		}
-
-		if (answerInput.value.includes("Err")) {
-			//reset
-			reset();
-			
-			return;
-		}	
-		
-		//alert("DITO!!");
-		
-		//TODO: -update: to use PEMDAS
-		if (!sOperator.includes("=")) {
-			//if not empty
-			if (arrayOperand.length>0) {
-				if (arrayOperator.at(-1)=="=") { //peek last element
-					arrayOperator.pop();
-				}
-				else {
-					//edited by Mike, 20260430
-					//reverify this;
-					//return;
-					if (arrayOperator.length>0) {
-						return;
-					}
-				}
-			}
-		}
-		
-		//alert(">>>>: "+parseFloat(sCurrOperand));
-		
-		//alert (parseFloat("00003"));
-		
-		//arrayOperator.push(sOperator);
-		arrayOperand.push(parseFloat(sCurrOperand));
-		sCurrOperand="";		
-		
-		if (sOperator.includes("=")) {
-			//alert(arrayOperand.pop());
-			var operandOne = arrayOperand.pop();
-			var operandTwo = arrayOperand.pop();
-			var sCurrOperator = arrayOperator.pop();
-
-			var sAnswer = "";
-			var fAnswer = 0.0;
-						
-			//TODO: -add: PEMDAS
-			//if (sCurrOperator.includes("*")) {
-			if (sCurrOperator.includes("×")) {
-				//alert (operandOne);
-				//alert (operandTwo);
-			
-				fAnswer = parseFloat(operandOne)*parseFloat(operandTwo);
-				//alert(fAnswer);
-				
-				sAnswer = fAnswer.toString();
-				
-				//alert("fAnswer: "+fAnswer);
-				//alert("sAnswer: "+sAnswer);
-				
-				//arrayOperand.push(sAnswer);
-				//alert("operand!: "+arrayOperand.at(-1));
-				
-				sCurrOperand=sAnswer;
-				arrayOperand.push(sCurrOperand);
-
-				arrayOperator.push("=");
-			}
-			else if (sCurrOperator.includes("+")) {
-				fAnswer = parseFloat(operandOne)+parseFloat(operandTwo);
-				sAnswer = fAnswer.toString();
-				sCurrOperand=sAnswer;
-				arrayOperand.push(sCurrOperand);
-				arrayOperator.push("=");
-			}
-			else if (sCurrOperator.includes("-")) {
-				//note order of operands; reversed;
-				fAnswer = -parseFloat(operandOne)+parseFloat(operandTwo);
-				sAnswer = fAnswer.toString();
-				sCurrOperand=sAnswer;
-				arrayOperand.push(sCurrOperand);
-				arrayOperator.push("=");
-			}
-			//else if (sCurrOperator.includes("/")) {
-			else if (sCurrOperator.includes("÷")) {
-				//note order of operands; reversed;
-				//fAnswer = parseFloat(operandOne)/parseFloat(operandTwo);
-				fAnswer = parseFloat(operandTwo)/parseFloat(operandOne);
-				sAnswer = fAnswer.toString();
-				sCurrOperand=sAnswer;
-				arrayOperand.push(sCurrOperand);
-				arrayOperator.push("=");
-			}
-			
-			//added by Mike, 20260430
-			if (sAnswer.includes(".")) {
-				//alert(">HERE: "+answerInput.value);
-				if (sAnswer.length>10) {
-					//11 digits including the decimal point
-					sAnswer=sAnswer.substring(0,11); 
-					//alert(">>HERE: "+answerInput.value);
-				}
-			}
-			
-			answerInput.value=sAnswer;
-			
-			//added by Mike, 20260430
-			backspaceButton.innerHTML = "Clear";
-			
-
-/*			
-			//added by Mike, 20260429
-			//alert (answerInput.value);
-		
-			if (answerInput.value.includes("NaN")) {
-				answerInput.value = "Err"; //Error
-				
-				//reset
-				sCurrOperand="";
-				arrayOperator.pop();
-				//answerInput.value="";
-				arrayOperator = [];
-				arrayOperand = [];
-			}
-			
-			//alert("HALLO!: "+arrayOperator.pop());
-
-			return;
-*/			
-		}
-		else {
-			//alert ("DITO!!: "+sOperator);
-		
-			arrayOperator.push(sOperator);
-			
-			answerInput.value=answerInput.value.concat(""+sOperator);
-			
-			//alert("answerInput: "+answerInput);
-		}
-	
-		//added by Mike, 20260429
-		//alert (answerInput.value);
-	
-		if (answerInput.value.includes("NaN")) {
-			reset();
-			
-			//alert("operandOne: "+operandOne);
-			//alert("operandTwo: "+operandTwo);
-			
-			//NaN was caused by an operand whose value is only "."
-			if ((Number.isNaN(operandOne)) || (Number.isNaN(operandTwo))) {
-				answerInput.value = "0";
-			}
-			else {
-				answerInput.value = "Err"; //Error
-			}
-		}
-	
-//		arrayOperator.push(sOperator);
-//		arrayOperand.push(sCurrOperand);
-//		sCurrOperand="";
-		
-		//TODO: -add: check if parenthesis sequence is correct; 
-		//otherwise, ERROR
-		//note: parenthesis can also function as multiply
-	}
-
-	function inputOperator(sOperator) {
 		var answerInput = document.getElementById("answerInputId");
 		var backspaceButton = document.getElementById("backspaceButtonId");
 		
@@ -1039,17 +845,17 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 		//otherwise, ERROR
 		//note: parenthesis can also function as multiply
 	}
-
-	function inputOperatorBUGGY(sOperator) {
+	
+	function inputOperator(sOperator) {
 		var answerInput = document.getElementById("answerInputId");
 		var backspaceButton = document.getElementById("backspaceButtonId");
-			
+		
 		//added by Mike, 20260430
 		if (backspaceButton.innerHTML.includes("Clear")) {
 			//reset();
 			backspaceButton.innerHTML = "Back<br/>Space";
 		}
-		
+
 		//alert(sOperator);
 		//alert(sCurrOperand);
 		
@@ -1058,333 +864,45 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 		//alert(arrayOperand.length);
 		if (arrayOperand.length==0) {
 			if (answerInput.value.length==0) {
-				return;
-			}
-		}
-		
-		//added by Mike, 20260430
-		if ((arrayOperand.length==1) && (arrayOperand.at(-1)==".")) { //peek last element
-			if ((answerInput.value.length==1) && (answerInput.value.at(-1)==".")) { //peek last element
-				return;
-			}
-		}
-
-		if (answerInput.value.includes("Err")) {
-			//reset
-			reset();
 			
-			return;
-		}	
-		
-		//alert("DITO!!");
-		
-		//TODO: -update: to use PEMDAS
-		if (sOperator.includes("=")) {
-			//added by Mike, 20260501
-			//alert(arrayOperator.length);
-			if (arrayOperator.length<=1) {
-			
-				//alert("HERE!!!: "+sOperator.toString());
+				//added by Mike, 20260502
+				//alert("DITO!!!");
 				
-				if (arrayOperatorTemp.length>0) {
-					processOperatorAddSub();	
+				//TODO: -update: this
+				
+				if (sOperator.at(-1)=="-") {
+					//alert(">>DITO!!!");
+					inputDigit("-");
 				}
-				else {
-					inputOperatorPREV(sOperator); 
-				}
+			
 				return;
-			}			
+			}
 		}
-		//if (!sOperator.includes("=")) {			
+		//added by Mike, 20260502
 		else {
-/*
-			//if not empty
-			if (arrayOperand.length>0) {
-				if (arrayOperator.at(-1)=="=") { //peek last element
-					//edited by Mike, 20260501
-					arrayOperator.pop();
-					//check PEMDAS
+			if (sOperator.at(-1)=="-") {
+				if ((answerInput.value.at(-1)=="×") || (answerInput.value.at(-1)=="÷")) {
+					//alert(">>DITO!!!");
+					inputDigit("-");
+					
+					return;
 				}
-				else {
-					//edited by Mike, 20260430
-					//reverify this;
-					//return;
-					if (arrayOperator.length>0) {
-						return;
-					}
-				}
-			}
-*/
-			//check PEMDAS
-			//if not empty
-			if (arrayOperand.length>0) {
-				if (arrayOperator.at(-1)=="=") { //peek last element
-					//edited by Mike, 20260501
-					arrayOperator.pop();
-				}
-				//note can be used to change the current operator
-				else {
-					if ((answerInput.value.at(-1)=="×") || (answerInput.value.at(-1)=="÷") || (answerInput.value.at(-1)=="+") || (answerInput.value.at(-1)=="-")) {
 
-						arrayOperator.pop();
-						
-						//alert(">"+answerInput.value);
-						
-						answerInput.value = answerInput.value.substring(0,answerInput.value.length-1);
-						
-						sCurrOperand=arrayOperand.at(-1);
-
-						//alert(">>"+answerInput.value);
-						
-						//alert(sOperator);
-						arrayOperator.push(sOperator);
-					}
-				}
-/*				//note can be used to change the current operator
-				else {
-					//edited by Mike, 20260430
-					//reverify this;
-					//return;
-					if (arrayOperator.length>0) {
-						return;
-					}
-				}
-*/				
+				//return;
 			}
 		}
 		
-		//alert(">>>>: "+parseFloat(sCurrOperand));
+		//alert(sOperator);
 		
-		//alert (parseFloat("00003"));
-		
-		//alert("sCurrOperand: "+sCurrOperand);
-		
-		//arrayOperator.push(sOperator);
-		arrayOperand.push(parseFloat(sCurrOperand));
-		sCurrOperand="";		
-		
-		if (sOperator.includes("=")) {
-			//added by Mike, 20260501
-			arrayOperatorTemp = [];
-			arrayOperandTemp = [];
-		
-			//alert(arrayOperand.pop());
-			var operandOne = arrayOperand.pop();
-			var operandTwo = arrayOperand.pop();
-			var sCurrOperator = arrayOperator.pop();
-
-/*						
-			alert (">"+operandOne);
-			alert (">"+operandTwo);
-
-			//alert(">arrayOperator.length: "+arrayOperator.length);
-			alert(">sCurrOperator: "+sCurrOperator);
-*/
-			var sAnswer = "";
-			var fAnswer = 0.0;
-						
-			//added by Mike, 20260501; PEMDAS
-			//solve all multiplications and divisions first
-			//var bHasSolvedMultiAndDiv = false;
-/*			
-			while ((sCurrOperator) || (arrayOperatorTemp.length>0)) {
-			
-				if ((sCurrOperator.includes("+")) || (sCurrOperator.includes("-"))) {
-					arrayOperatorTemp.push(sCurrOperator);
-					arrayOperandTemp.push(operandOne);
-					arrayOperandTemp.push(operandTwo);
-				}
-*/				
-				//if (sCurrOperator.includes("*")) {
-				if (sCurrOperator.includes("×")) {
-					//alert (operandOne);
-					//alert (operandTwo);
-					
-					//alert("DITO!!!");
-				
-					fAnswer = parseFloat(operandOne)*parseFloat(operandTwo);
-					//alert(fAnswer);
-					
-					sAnswer = fAnswer.toString();
-					
-					//alert("fAnswer: "+fAnswer);
-					//alert("sAnswer: "+sAnswer);
-					
-					//arrayOperand.push(sAnswer);
-					//alert("operand!: "+arrayOperand.at(-1));
-					
-					sCurrOperand=sAnswer;
-					arrayOperand.push(sCurrOperand);
-
-					arrayOperator.push("=");
-				}
-				else if (sCurrOperator.includes("+")) {
-					//arrayOperand.push(operandTwo);
-					arrayOperandTemp.push(operandOne);
-					arrayOperatorTemp.push("+");
-					sAnswer=operandTwo.toString();
-					sCurrOperand=sAnswer;
-				
-/*
-					fAnswer = parseFloat(operandOne)+parseFloat(operandTwo);
-					sAnswer = fAnswer.toString();
-					sCurrOperand=sAnswer;
-					arrayOperand.push(sCurrOperand);
-					//arrayOperator.push("=");
-*/					
-				}
-				else if (sCurrOperator.includes("-")) {
-					//arrayOperand.push(operandTwo);
-					arrayOperandTemp.push(operandOne);
-					arrayOperatorTemp.push("-");
-					sAnswer=operandTwo.toString();
-					sCurrOperand=sAnswer;
-
-/*
-					//note order of operands; reversed;
-					fAnswer = -parseFloat(operandOne)+parseFloat(operandTwo);
-					sAnswer = fAnswer.toString();
-					sCurrOperand=sAnswer;
-					arrayOperand.push(sCurrOperand);
-					//arrayOperator.push("=");
-*/
-				}
-				//else if (sCurrOperator.includes("/")) {
-				else if (sCurrOperator.includes("÷")) {
-					//alert (operandOne);
-					//alert (operandTwo);
-					
-					//note order of operands; reversed;
-					//fAnswer = parseFloat(operandOne)/parseFloat(operandTwo);
-					fAnswer = parseFloat(operandTwo)/parseFloat(operandOne);
-					sAnswer = fAnswer.toString();
-					sCurrOperand=sAnswer;
-					arrayOperand.push(sCurrOperand);
-					arrayOperator.push("=");
-				}
-				else {
-					arrayOperandTemp.push(operandOne);
-					arrayOperandTemp.push(operandTwo);
-					arrayOperatorTemp.push(sCurrOperator);
-				}
-/*				
-			}
-*/				
-			//added by Mike, 20260430
-			if (sAnswer.includes(".")) {
-				//alert(">HERE: "+answerInput.value);
-				if (sAnswer.length>10) {
-					//11 digits including the decimal point
-					sAnswer=sAnswer.substring(0,11); 
-					//alert(">>HERE: "+answerInput.value);
-				}
-			}
-			
-			//edited by Mike, 20260501
-			//answerInput.value=sAnswer;
-/*
-			//alert(answerInput.value);
-			alert("answerInput.value.length: "+answerInput.value.length);
-			alert("operandOne.length: "+operandOne.toString().length);
-			alert("operandTwo.length: "+operandTwo.toString().length);
-			alert("sCurrOperator.length: "+sCurrOperator.length);
-			alert("sAnswer: "+sAnswer);
-*/			
-			answerInput.value = answerInput.value.substring(0,answerInput.value.length-operandOne.toString().length-operandTwo.toString().length-sCurrOperator.length).concat(sAnswer);
-			
-			//added by Mike, 20260430
-			backspaceButton.innerHTML = "Clear";
-
-/*			
-			//added by Mike, 20260501
-			//alert("DITO!! "+arrayOperator.at(-1).toString());
-			if (arrayOperator.length>0){
-				if (arrayOperator.includes("×") || arrayOperator.includes("÷")) {
-					if (arrayOperand.length>=2) {
-						inputOperator("=");
-						
-						alert("HALLO!");
-					}
-				}
-			}
-*/			
-		}
-		else {
-			//alert ("DITO!!: "+sOperator);
-		
-			arrayOperator.push(sOperator);
-			
-			answerInput.value=answerInput.value.concat(""+sOperator);
-			
-			//alert("answerInput: "+answerInput);
-		}
-	
-		//added by Mike, 20260429
-		//alert (answerInput.value);
-	
-		if (answerInput.value.includes("NaN")) {
-			reset();
-			
-			//alert("operandOne: "+operandOne);
-			//alert("operandTwo: "+operandTwo);
-			
-			//NaN was caused by an operand whose value is only "."
-			if ((Number.isNaN(operandOne)) || (Number.isNaN(operandTwo))) {
-				answerInput.value = "0";
-			}
-			else {
-				answerInput.value = "Err"; //Error
-			}
-		}
 		//added by Mike, 20260501
-		else {
-			//alert("DITO!! "+arrayOperator.at(-1).toString());
-/*		
-			if (arrayOperator.length>0){
-				if (arrayOperator.includes("×") || arrayOperator.includes("÷")) {
-					if (arrayOperand.length>=2) {
-						inputOperator("=");
-						
-						alert("HALLO!");
-					}
+		if (arrayOperator.length>0) {
+			//edited by Mike, 20260502
+			if (arrayOperator.at(-1)=="=") {
+				if (!isOperator(answerInput.value.toString())) {
+					//alert("isOperator: "+answerInput.value.toString());
+					arrayOperator = [];
+					arrayOperator.push("="); //sOperator
 				}
-			}
-			else {
-				alert("END!!");
-			}
-*/			
-		}
-	
-//		arrayOperator.push(sOperator);
-//		arrayOperand.push(sCurrOperand);
-//		sCurrOperand="";
-		
-		//TODO: -add: check if parenthesis sequence is correct; 
-		//otherwise, ERROR
-		//note: parenthesis can also function as multiply
-	}
-  
-	function processOperatorAddSub() {
-		sOperator="=";
-	
-		var answerInput = document.getElementById("answerInputId");
-		var backspaceButton = document.getElementById("backspaceButtonId");
-		
-		//added by Mike, 20260430
-		if (backspaceButton.innerHTML.includes("Clear")) {
-			//reset();
-			backspaceButton.innerHTML = "Back<br/>Space";
-		}
-		
-		//alert(sOperator);
-		//alert(sCurrOperand);
-		
-		//added by Mike, 20260429
-		//enter an operand first
-		//alert(arrayOperand.length);
-		if (arrayOperand.length==0) {
-			if (answerInput.value.length==0) {
-				return;
 			}
 		}
 		
@@ -1406,59 +924,61 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 		
 		//TODO: -update: to use PEMDAS
 		if (!sOperator.includes("=")) {
-/*
 			//if not empty
 			if (arrayOperand.length>0) {
 				if (arrayOperator.at(-1)=="=") { //peek last element
-					//edited by Mike, 20260501
-					arrayOperator.pop();
-					//check PEMDAS
-				}
-				else {
-					//edited by Mike, 20260430
-					//reverify this;
-					//return;
-					if (arrayOperator.length>0) {
-						return;
-					}
-				}
-			}
-*/
-			//check PEMDAS
-			//if not empty
-			if (arrayOperand.length>0) {
-				if (arrayOperator.at(-1)=="=") { //peek last element
-					//edited by Mike, 20260501
 					arrayOperator.pop();
 				}
 				//note can be used to change the current operator
 				else {
+					//alert("sOperator"+sOperator);
+
 					if ((answerInput.value.at(-1)=="×") || (answerInput.value.at(-1)=="÷") || (answerInput.value.at(-1)=="+") || (answerInput.value.at(-1)=="-")) {
 
-						arrayOperator.pop();
-						
+						//alert(arrayOperator.pop());
+						//edited by Mike, 20260502
+/*						
+						arrayOperator.pop()
 						//alert(">"+answerInput.value);
 						
 						answerInput.value = answerInput.value.substring(0,answerInput.value.length-1);
-						
+*/
+						let sCurrOperatorTemp = arrayOperator.pop().toString();
+/*						
+						alert("> answerInput.value: "+answerInput.value);
+						alert("> sCurrOperatorTemp: "+sCurrOperatorTemp);
+*/												
+						if (sCurrOperatorTemp.includes(answerInput.value.at(-1))) {
+							answerInput.value = answerInput.value.substring(0,answerInput.value.length-1);
+						}
+						else {
+							answerInput.value = answerInput.value.substring(0,answerInput.value.length-2);
+						}
+												
 						sCurrOperand=arrayOperand.at(-1);
 
 						//alert(">>"+answerInput.value);
 						
 						//alert(sOperator);
+						
 						arrayOperator.push(sOperator);
 					}
-				}
-/*				//note can be used to change the current operator
-				else {
-					//edited by Mike, 20260430
-					//reverify this;
-					//return;
-					if (arrayOperator.length>0) {
-						return;
+					
+/*					//removed by Mike, 20260502					
+					else {
+
+						alert(">arrayOperator.length: "+arrayOperator.length);
+						
+						alert("arrayOperator.at(-1): "+arrayOperator.at(-1));
+
+						if (arrayOperator.length>0) {
+							//alert("arrayOperator.at(-1): "+arrayOperator.at(-1));
+							
+							//return;
+						}
 					}
+*/					
 				}
-*/				
 			}
 		}
 		
@@ -1466,101 +986,297 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 		
 		//alert (parseFloat("00003"));
 		
-		//alert("sCurrOperand: "+sCurrOperand);
-		
 		//arrayOperator.push(sOperator);
 		arrayOperand.push(parseFloat(sCurrOperand));
 		sCurrOperand="";		
 		
 		if (sOperator.includes("=")) {
-/*
-			//added by Mike, 20260501
-			arrayOperatorTemp = [];
-			arrayOperandTemp = [];
-*/		
 			//alert(arrayOperand.pop());
+/*			//edited by Mike, 20260502
 			var operandOne = arrayOperand.pop();
 			var operandTwo = arrayOperand.pop();
 			var sCurrOperator = arrayOperator.pop();
+*/
+/*
+			alert("START arrayOperator.length: "+arrayOperator.length);
+*/
+			var operandOne = "";
+			var operandTwo = "";
+			var sCurrOperator = "";
+
+			if (arrayOperand.length>0) {
+				operandOne = arrayOperand.pop();
+			}
+
+			if (arrayOperand.length>0) {
+				operandTwo = arrayOperand.pop();
+			}
 			
-			alert (">"+operandOne);
-			alert (">"+operandTwo);
-			
-			//alert(">arrayOperator.length: "+arrayOperator.length);
-			alert(">sCurrOperator: "+sCurrOperator);
+			if (arrayOperator.length>0) {
+				sCurrOperator = arrayOperator.pop();
+			}
 
 			var sAnswer = "";
 			var fAnswer = 0.0;
-						
-			//added by Mike, 20260501; PEMDAS
-			//solve all multiplications and divisions first
-			//var bHasSolvedMultiAndDiv = false;
 /*			
-			while ((sCurrOperator) || (arrayOperatorTemp.length>0)) {
-			
-				if ((sCurrOperator.includes("+")) || (sCurrOperator.includes("-"))) {
-					arrayOperatorTemp.push(sCurrOperator);
-					arrayOperandTemp.push(operandOne);
-					arrayOperandTemp.push(operandTwo);
-				}
-*/				
+			alert("DITO!!!");
+			alert("sCurrOperator: "+sCurrOperator);
+			alert ("operandOne: "+operandOne);
+			alert ("operandTwo: "+operandTwo);
+*/						
+			//TODO: -add: PEMDAS
+			//if (sCurrOperator.includes("*")) {
+			if (sCurrOperator.includes("×")) {
 /*
-				//if (sCurrOperator.includes("*")) {
-				if (sCurrOperator.includes("×")) {
-					//alert (operandOne);
-					//alert (operandTwo);
-					
-					//alert("DITO!!!");
-				
-					fAnswer = parseFloat(operandOne)*parseFloat(operandTwo);
-					//alert(fAnswer);
-					
-					sAnswer = fAnswer.toString();
-					
-					//alert("fAnswer: "+fAnswer);
-					//alert("sAnswer: "+sAnswer);
-					
-					//arrayOperand.push(sAnswer);
-					//alert("operand!: "+arrayOperand.at(-1));
-					
-					sCurrOperand=sAnswer;
-					arrayOperand.push(sCurrOperand);
-
-					//arrayOperator.push("=");
+				alert("****: "+arrayOperator.at(-1));
+				alert ("**operandOne: "+operandOne);
+				alert ("**operandTwo: "+operandTwo);
+*/				
+				//added by Mike, 20260505
+				if (arrayOperator.at(-1)=="-") {
+					operandTwo=-operandTwo;
+					arrayOperator.pop();
+					arrayOperator.push("+");
 				}
-				else */if (sCurrOperator.includes("+")) {
+
+				fAnswer = parseFloat(operandOne)*parseFloat(operandTwo);
+				//alert(fAnswer);
+				
+				sAnswer = fAnswer.toString();
+				
+				//alert("fAnswer: "+fAnswer);
+				//alert("sAnswer: "+sAnswer);
+				
+				//arrayOperand.push(sAnswer);
+				//alert("operand!: "+arrayOperand.at(-1));
+				
+				sCurrOperand=sAnswer;
+				arrayOperand.push(sCurrOperand);
+
+				if ((arrayOperator.includes("×")) || (arrayOperator.includes("÷")) ) {
+				
+//					alert("HALLO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+/*
+					arrayOperand.push(operandOne);
+					//arrayOperandTemp.push(operandTwo);
+					arrayOperatorTemp.push("+");
+*/					
+					//sCurrOperand=operandTwo;
+					////arrayOperand.push(sCurrOperand);
+/*					
+					alert("arrayOperand.at(-1): "+arrayOperand.at(-1));
+					alert("arrayOperand.at(arrayOperand.length-2): "+arrayOperand.at(arrayOperand.length-2));
+					alert("arrayOperator.at(-1): "+arrayOperator.at(-1));
+*/					
+					arrayOperand.pop();
+					
+					inputOperator("=");
+					
+					//alert("HALLO!!!!!!!!!!");
+					
+					return;
+				}				
+				
+				//added by Mike, 20260505
+/*				
+				if (arrayOperatorTemp.length>0) {
+					arrayOperator.push(arrayOperatorTemp.pop());
+
+					if (arrayOperandTemp.length>0) {
+						arrayOperand.push(arrayOperandTemp.pop());
+
+						sCurrOperand=arrayOperand.at(-1);
+					}
+				}
+*/
+				while (arrayOperatorTemp.length>0) {
+					arrayOperator.push(arrayOperatorTemp.pop());
+				}
+
+				while (arrayOperandTemp.length>0) {
+					arrayOperand.push(arrayOperandTemp.pop());
+
+					sCurrOperand=arrayOperand.at(-1);
+				}
+				
+				arrayOperator.push("=");				
+			}
+			else if (sCurrOperator.includes("+")) {
+/*
+				alert("DITO!!! +");
+				alert("arrayOperator.includes(\"×\"): "+arrayOperator.includes("×"));
+*/				
+				if ((arrayOperator.includes("×")) || (arrayOperator.includes("÷")) ) {
+					arrayOperandTemp.push(operandOne);
+					//arrayOperandTemp.push(operandTwo);
+					arrayOperatorTemp.push("+");
+					
+					sCurrOperand=operandTwo;
+					//arrayOperand.push(sCurrOperand);
+/*					
+					alert("arrayOperand.at(-1): "+arrayOperand.at(-1));
+					alert("arrayOperand.at(arrayOperand.length-2): "+arrayOperand.at(arrayOperand.length-2));
+					alert("arrayOperator.at(-1): "+arrayOperator.at(-1));
+*/					
+					inputOperator("=");
+					
+					//alert("HALLO!!!!!!!!!!");
+					
+					//TODO: reverify
+					
+					return;
+				}
+				else {
+					//added by Mike, 20260505
+					if (arrayOperator.at(-1)=="-") {
+						operandTwo=-operandTwo;
+						arrayOperator.pop();
+						arrayOperator.push("+");
+					}				
+				
 					fAnswer = parseFloat(operandOne)+parseFloat(operandTwo);
 					sAnswer = fAnswer.toString();
 					sCurrOperand=sAnswer;
 					arrayOperand.push(sCurrOperand);
-					//arrayOperator.push("=");
+					arrayOperator.push("=");
 				}
-				else if (sCurrOperator.includes("-")) {
+			}
+			else if (sCurrOperator.includes("-")) {
+				if ((arrayOperator.includes("×")) || (arrayOperator.includes("÷")) ) {
+					//note order of operands; reversed;
+					arrayOperandTemp.push(-operandOne);
+					//arrayOperandTemp.push(operandTwo);
+					arrayOperatorTemp.push("-");
+					
+					sCurrOperand=operandTwo;
+					//sCurrOperand=-operandOne;
+
+					//arrayOperand.push(sCurrOperand);
+/*					
+					alert("arrayOperand.at(-1): "+arrayOperand.at(-1));
+					alert("arrayOperand.at(arrayOperand.length-2): "+arrayOperand.at(arrayOperand.length-2));
+					alert("arrayOperator.at(-1): "+arrayOperator.at(-1));
+*/					
+					inputOperator("=");
+					
+					//alert("HALLO!!!!!!!!!!");
+					
+					//TODO: reverify
+					
+					return;
+				}
+				else {
+					//added by Mike, 20260505
+					if (arrayOperator.at(-1)=="-") {
+						operandTwo=-operandTwo;
+						arrayOperator.pop();
+						arrayOperator.push("+");
+					}				
+					
 					//note order of operands; reversed;
 					fAnswer = -parseFloat(operandOne)+parseFloat(operandTwo);
 					sAnswer = fAnswer.toString();
 					sCurrOperand=sAnswer;
 					arrayOperand.push(sCurrOperand);
-					//arrayOperator.push("=");
-				}
-/*				
-				//else if (sCurrOperator.includes("/")) {
-				else if (sCurrOperator.includes("÷")) {
-					//alert (operandOne);
-					//alert (operandTwo);
 					
-					//note order of operands; reversed;
-					//fAnswer = parseFloat(operandOne)/parseFloat(operandTwo);
-					fAnswer = parseFloat(operandTwo)/parseFloat(operandOne);
-					sAnswer = fAnswer.toString();
-					sCurrOperand=sAnswer;
-					arrayOperand.push(sCurrOperand);
-					//arrayOperator.push("=");
+					//added by Mike, 20260505
+					if (arrayOperatorTemp.length>0) {
+						arrayOperator.push(arrayOperatorTemp.pop());
+
+						if (arrayOperandTemp.length>0) {
+							arrayOperand.push(arrayOperandTemp.pop());
+
+							sCurrOperand=arrayOperand.at(-1);
+						}
+					}
+				
+					arrayOperator.push("=");
 				}
-*/				
-/*				
 			}
-*/				
+			//else if (sCurrOperator.includes("/")) {
+			else if (sCurrOperator.includes("÷")) {
+/*			
+				alert (operandOne);
+				alert (operandTwo);			
+				alert (sCurrOperator);			
+*/			
+				//added by Mike, 20260505
+				if (arrayOperator.at(-1)=="-") {
+					operandTwo=-operandTwo;
+					arrayOperator.pop();
+					arrayOperator.push("+");
+				}
+
+				//note order of operands; reversed;
+				//fAnswer = parseFloat(operandOne)/parseFloat(operandTwo);
+				fAnswer = parseFloat(operandTwo)/parseFloat(operandOne);
+				sAnswer = fAnswer.toString();
+				sCurrOperand=sAnswer;
+				arrayOperand.push(sCurrOperand);
+				
+				
+				if ((arrayOperator.includes("×")) || (arrayOperator.includes("÷")) ) {
+				
+					//alert("HALLO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+/*
+					arrayOperand.push(operandOne);
+					//arrayOperandTemp.push(operandTwo);
+					arrayOperatorTemp.push("+");
+*/					
+					//sCurrOperand=operandTwo;
+					////arrayOperand.push(sCurrOperand);
+/*					
+					alert("arrayOperand.at(-1): "+arrayOperand.at(-1));
+					alert("arrayOperand.at(arrayOperand.length-2): "+arrayOperand.at(arrayOperand.length-2));
+					alert("arrayOperator.at(-1): "+arrayOperator.at(-1));
+*/					
+					arrayOperand.pop();
+					
+					inputOperator("=");
+					
+					//alert("HALLO!!!!!!!!!!");
+					
+					return;
+				}				
+				
+				//added by Mike, 20260505
+/*				
+				if (arrayOperatorTemp.length>0) {
+					arrayOperator.push(arrayOperatorTemp.pop());
+
+					if (arrayOperandTemp.length>0) {
+						arrayOperand.push(arrayOperandTemp.pop());
+
+						sCurrOperand=arrayOperand.at(-1);
+					}
+				}
+*/
+				while (arrayOperatorTemp.length>0) {
+					arrayOperator.push(arrayOperatorTemp.pop());
+				}
+
+				while (arrayOperandTemp.length>0) {
+					arrayOperand.push(arrayOperandTemp.pop());
+
+					sCurrOperand=arrayOperand.at(-1);
+				}
+				
+				
+				arrayOperator.push("=");
+			}
+			//added by Mike, 20260502
+			else {// if (sCurrOperator.includes("=")) {
+				//alert("sAnswer: "+sAnswer);
+				//alert("answerInput.value: "+answerInput.value);
+				
+				sAnswer = answerInput.value;	
+				sCurrOperand=sAnswer;
+				arrayOperand.push(sCurrOperand);
+				arrayOperator.push("=");
+			}
+			
+			//alert(">>DITO!!!");
+			
 			//added by Mike, 20260430
 			if (sAnswer.includes(".")) {
 				//alert(">HERE: "+answerInput.value);
@@ -1570,28 +1286,32 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 					//alert(">>HERE: "+answerInput.value);
 				}
 			}
-			
-			//edited by Mike, 20260501
-			//answerInput.value=sAnswer;
 
-			//alert(answerInput.value);
-			alert("answerInput.value.length: "+answerInput.value.length);
-			alert("operandOne.length: "+operandOne.toString().length);
-			alert("operandTwo.length: "+operandTwo.toString().length);
-			alert("sCurrOperator.length: "+sCurrOperator.length);
-			alert("sAnswer: "+sAnswer);
+			//alert(">>>DITO!!!");
 			
-			answerInput.value = answerInput.value.substring(0,answerInput.value.length-operandOne.toString().length-operandTwo.toString().length-sCurrOperator.length).concat(sAnswer);
-			
+			//edited by Mike, 20260502
+			answerInput.value=sAnswer;	
+
 			//added by Mike, 20260430
 			backspaceButton.innerHTML = "Clear";
+			
+			//alert("answerInput.value: "+answerInput.value);
 		}
 		else {
 			//alert ("DITO!!: "+sOperator);
+			//alert(answerInput.value.at(-1));
 		
-			arrayOperator.push(sOperator);
-			
-			answerInput.value=answerInput.value.concat(""+sOperator);
+			if (answerInput.value.at(-1)=="-") {
+				arrayOperator.pop();
+				answerInput.value=answerInput.value.substring(0,answerInput.value.length-1);
+				reset();
+				
+				//alert(answerInput.value);
+			}
+			else {
+				arrayOperator.push(sOperator);
+				answerInput.value=answerInput.value.concat(""+sOperator);
+			}
 			
 			//alert("answerInput: "+answerInput);
 		}
@@ -1613,7 +1333,37 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 				answerInput.value = "Err"; //Error
 			}
 		}
+		//added by Mike, 20260502
+		else if (answerInput.value.includes("Infinity")) {
+			answerInput.value = "∞";
+		}
+/*	
+		//added by Mike, 20260505
+		alert("> END arrayOperator.length: "+arrayOperator.length);
+		//alert("arrayOperator.at(-1): "+arrayOperator.at(-1));
+		alert("arrayOperator.at(0): "+arrayOperator.at(0));
+*/		
+		if (arrayOperator.includes("=")) {
+			if ((arrayOperator.includes("+")) || (arrayOperator.includes("-"))) {
+/*
+				alert("REPEAT!!!");
+				alert("arrayOperand.length: "+arrayOperand.length);
+				
+				alert("arrayOperand2: "+arrayOperand.at(-1));
+				alert("arrayOperand1: "+arrayOperand.at(0));
 
+				//alert("arrayOperand1 EXTRA: "+arrayOperand.at(1));
+				//alert("arrayOperand1 EXTRA: "+arrayOperand.at(2));
+				
+				alert("arrayOperator: "+arrayOperator.at(0));
+*/				
+				arrayOperand.pop(); //remove the top-most operand that will be added again;
+				
+				arrayOperator.pop(); //remove the excess "=";
+				inputOperator("=");
+			}
+		}
+		
 	
 //		arrayOperator.push(sOperator);
 //		arrayOperand.push(sCurrOperand);
@@ -1623,7 +1373,8 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 		//otherwise, ERROR
 		//note: parenthesis can also function as multiply
 	}
-  
+
+
   </script>
 
   <body id="myBodyId" onload="onLoad();">
