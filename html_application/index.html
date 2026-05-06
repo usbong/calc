@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20260505; from 20260504
+' @date updated: 20260506; from 20260505
 ' @website: www.usbong.ph
 '
 ' References: 
@@ -179,9 +179,18 @@
 	var arrayOperandTemp = []; 
 	var arrayOperatorTemp = [];
 	
+	//added by Mike, 20260506
+	var arrayOperatorParentheses = [];
+	var arrayOperandParentheses = [];
+	
+	
 	function onLoad() {
 		var answerInput = document.getElementById("answerInputId");
 		answerInput.value="";
+		
+		//added by Mike, 20260506
+		//debug
+		processParentheses();
 	}
 	
 	function isOperator(sInput) {
@@ -532,8 +541,11 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 		//added by Mike, 20260501
 		arrayOperatorTemp = [];
 		arrayOperandTemp = [];
-	}
-	
+		
+		//added by Mike, 20260506
+		arrayOperatorParentheses = [];
+		arrayOperandParentheses = [];
+	}	
 
 	function inputOperatorPREV(sOperator) {
 		var answerInput = document.getElementById("answerInputId");
@@ -844,6 +856,35 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 		//TODO: -add: check if parenthesis sequence is correct; 
 		//otherwise, ERROR
 		//note: parenthesis can also function as multiply
+	}
+	
+	//added by Mike, 20260506
+	function processParentheses() {
+		//debug
+		arrayOperator.push(")");
+		arrayOperator.push("×");
+		arrayOperator.push("+");
+		arrayOperator.push("(");
+
+		arrayOperand.push("6");
+		arrayOperand.push("2");
+		arrayOperand.push("1");
+	
+		do {
+			arrayOperatorParentheses.push(arrayOperator.pop());
+			arrayOperandParentheses.push(arrayOperand.pop());
+			
+			alert("arrayOperatorParentheses: "+arrayOperatorParentheses);
+			alert("arrayOperandParentheses: "+arrayOperandParentheses);
+		}
+		while (arrayOperatorParentheses.at(-1)!=")")
+		
+		//TODO: -add: swap elements; arrayOperatorParentheses and arrayOperator
+		//TODO: -add: swap elements; arrayOperandParentheses and arrayOperand
+		
+		//inputOperator("=");
+		
+		//TODO: -update answerInput.value accordingly
 	}
 	
 	function inputOperator(sOperator) {
