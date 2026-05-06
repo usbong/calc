@@ -52,7 +52,7 @@ TODO: -add: PEMDAS
 
 <img src="https://github.com/usbong/calc/blob/main/plan/pemdasPlan20260504.jpg" width="60%">
 
-8. 20260505 (CURRENT); http://store.usbong.ph/server/calc/index.html<br/>
+8. 20260505; http://store.usbong.ph/server/calc/index.html<br/>
 +added: PEMDAS without yet the parenthesis<br/>
 +tested: to output the correct answer with the following:<br/>
 `6*2+1=13`<br/>
@@ -61,6 +61,12 @@ TODO: -add: PEMDAS
 `1-3+2=0`<br/>
 `1*3/6=0.5`<br/>
 `2*5/3=3.333333333`<br/>
+
+8. 20260505 (CURRENT); http://store.usbong.ph/server/calc/index.html<br/>
+
++added: work-in-progress function to process the parentheses with code for debugging purposes
+
+<img src="https://github.com/usbong/calc/blob/main/plan/pemdasPlanParenthesis20260506.jpg" width="60%">
 
 # Get PhilNITS Certified!
 
