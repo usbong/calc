@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20260506; from 20260505
+' @date updated: 20260507; from 20260506
 ' @website: www.usbong.ph
 '
 ' References: 
@@ -182,7 +182,6 @@
 	//added by Mike, 20260506
 	var arrayOperatorParentheses = [];
 	var arrayOperandParentheses = [];
-	
 	
 	function onLoad() {
 		var answerInput = document.getElementById("answerInputId");
@@ -860,6 +859,8 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 	
 	//added by Mike, 20260506
 	function processParentheses() {
+		var answerInput = document.getElementById("answerInputId");
+	
 		//debug
 		arrayOperator.push(")");
 		arrayOperator.push("×");
@@ -869,10 +870,18 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 		arrayOperand.push("6");
 		arrayOperand.push("2");
 		arrayOperand.push("1");
+		
+		var iArrayOperandCount = 0;
+		var iArrayOperandCountMax = arrayOperand.length;
 	
 		do {
 			arrayOperatorParentheses.push(arrayOperator.pop());
-			arrayOperandParentheses.push(arrayOperand.pop());
+			
+			//END
+			if (iArrayOperandCount<iArrayOperandCountMax) {
+				arrayOperandParentheses.push(arrayOperand.pop());
+				iArrayOperandCount++;
+			}
 			
 			alert("arrayOperatorParentheses: "+arrayOperatorParentheses);
 			alert("arrayOperandParentheses: "+arrayOperandParentheses);
@@ -881,9 +890,95 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 		
 		//TODO: -add: swap elements; arrayOperatorParentheses and arrayOperator
 		//TODO: -add: swap elements; arrayOperandParentheses and arrayOperand
+
+//alert(">");
+
+		var arrayOperatorParenthesesOutput = [];
+		var arrayOperandParenthesesOutput = [];
+
+//alert(">>");
+
+		answerInput.value = "";
+
+//alert(">>>");
+
+		//alert("START arrayOperatorParentheses.length: "+arrayOperatorParentheses.length);
+
+		arrayOperatorParentheses.reverse();
+		arrayOperandParentheses.reverse();
 		
-		//inputOperator("=");
+		//alert("START arrayOperandParentheses.length: "+arrayOperandParentheses.length);
 		
+		iArrayOperandCount = 0;
+		
+		while (arrayOperatorParentheses.length>0) {
+			arrayOperatorParenthesesOutput.push(arrayOperatorParentheses.pop());
+			
+			if (arrayOperandParentheses.length>0) {
+				arrayOperandParenthesesOutput.push(arrayOperandParentheses.pop());
+				
+				alert(">>>>> arrayOperandParenthesesOutput.at(-1): "+arrayOperandParenthesesOutput.at(-1));
+/*				
+				alert(">>> arrayOperandParentheses.length: "+arrayOperandParentheses.length);
+*/				
+			}
+			
+			if ((arrayOperatorParenthesesOutput.at(-1)=="(") || (arrayOperatorParenthesesOutput.at(-1)==")")) {
+				arrayOperatorParenthesesOutput.pop();
+			}
+			else {
+				answerInput.value = answerInput.value.concat(arrayOperatorParenthesesOutput.at(-1));
+			}
+			
+			//answerInput.value = answerInput.value.concat(arrayOperatorParenthesesOutput.at(-1)).concat(arrayOperandParenthesesOutput.at(-1));
+						
+			if (iArrayOperandCount<iArrayOperandCountMax) {
+				answerInput.value = answerInput.value.concat(arrayOperandParenthesesOutput.at(-1));
+				
+				iArrayOperandCount++;
+			}
+			
+			//alert("HERE!!!");
+		}
+
+		//input: 2*(1-(1+2*6))
+		//output: "1+2*6"
+		alert("answerInput.value: "+answerInput.value);
+		
+		//TODO: -update: this
+/*
+		var arrayOperatorOrigTemp = [];
+		var arrayOperandOrigTemp = [];
+*/		
+		if (arrayOperator.length>0) {
+			arrayOperator.pop();
+		}
+
+		if (arrayOperand.length>0) {
+			arrayOperand.pop();
+		}
+
+		arrayOperatorParenthesesOutput.reverse();
+		while (arrayOperatorParenthesesOutput.length>0) {
+			arrayOperator.push(arrayOperatorParenthesesOutput.pop());
+		}
+
+		arrayOperandParenthesesOutput.reverse();
+		while (arrayOperandParenthesesOutput.length>0) {
+		
+			alert("!!!!! arrayOperandParenthesesOutput.at(-1): "+arrayOperandParenthesesOutput.at(-1));
+			
+			arrayOperand.push(arrayOperandParenthesesOutput.pop());
+		}
+				
+		//alert("arrayOperator: "+arrayOperator.at(-1));
+		//alert("arrayOperand: "+arrayOperand.at(-1));
+
+		//TODO: -reverify: this
+/*		
+		sCurrOperand = arrayOperand.at(-1);
+		inputOperator("=");
+*/		
 		//TODO: -update answerInput.value accordingly
 	}
 	
@@ -897,8 +992,8 @@ alert(">>>>"+sCurrOperandInArray.substring(0,sCurrOperandInArray.length-1));
 			backspaceButton.innerHTML = "Back<br/>Space";
 		}
 
-		//alert(sOperator);
-		//alert(sCurrOperand);
+		alert(sOperator);
+		alert(sCurrOperand);
 		
 		//added by Mike, 20260429
 		//enter an operand first
