@@ -62,11 +62,16 @@ TODO: -add: PEMDAS
 `1*3/6=0.5`<br/>
 `2*5/3=3.333333333`<br/>
 
-8. 20260505 (CURRENT); http://store.usbong.ph/server/calc/index.html<br/>
-
+9. 20260506; http://store.usbong.ph/server/calc/index.html<br/>
 +added: work-in-progress function to process the parentheses with code for debugging purposes
 
 <img src="https://github.com/usbong/calc/blob/main/plan/pemdasPlanParenthesis20260506.jpg" width="60%">
+
+10. 20260507 (CURRENT); http://store.usbong.ph/server/calc/index.html<br/>
++updated: work-in-progress function to process the parentheses with code for debugging purposes; can now prepare the input to be processed<br/> 
+**Example:**<br/> 
+**input:** `2*(1-(1+2*6))`<br/>
+**output:** `1+2*6`
 
 # Get PhilNITS Certified!
 
