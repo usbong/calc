@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20260605; from 20260520
+' @date updated: 20260520; from 20260519
 ' @website: www.usbong.ph
 '
 ' References: 
@@ -24,7 +24,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-	<link rel="icon" type="image/x-icon" href="./assets/images/calcalphaiconUpdated.png">
+	<link rel="icon" type="image/x-icon" href="./assets/images/calcalphaicon.png">
   </head>
 
   <title>
@@ -746,9 +746,9 @@
 		if (backspaceButton.innerHTML.includes("CLEAR")) {
 			//reset();
 			backspaceButton.innerHTML = "BACK<br/>SPACE";
-			
-			//edited by Mike, 20260605; from 20260502
-			if ((answerInput.value=="0") || (digit==".")) {
+
+			//added by Mike, 20260502
+			if (answerInput.value=="0") {
 				reset();
 			}
 		}
@@ -1063,27 +1063,7 @@
 						arrayOperator.push("+");
 					}				
 				
-					//edited by Mike, 20260605
-					//------------------------------------------
-					//fAnswer = parseFloat(operandOne)+parseFloat(operandTwo);
-
-					var iPlacesAfterDecimalPointOperandOne = getPlacesAfterDecimalPoint(operandOne);
-					var iPlacesAfterDecimalPointOperandTwo = getPlacesAfterDecimalPoint(operandTwo);
-					
-					if (iPlacesAfterDecimalPointOperandOne>iPlacesAfterDecimalPointOperandTwo) {
-						iPlacesAfterDecimalPoint = iPlacesAfterDecimalPointOperandOne;
-					}
-					else {
-						iPlacesAfterDecimalPoint = iPlacesAfterDecimalPointOperandTwo;
-					}
-				
-					var iPowerOfTen = 10 ** iPlacesAfterDecimalPoint;
-
-					fAnswer = (parseFloat(operandOne*iPowerOfTen))+(parseFloat(operandTwo*iPowerOfTen));
-					
-					fAnswer = (fAnswer/(iPowerOfTen));
-					//------------------------------------------
-					
+					fAnswer = parseFloat(operandOne)+parseFloat(operandTwo);
 					sAnswer = fAnswer.toString();
 					sCurrOperand=sAnswer;
 					arrayOperand.push(sCurrOperand);
@@ -1111,27 +1091,7 @@
 					}
 					
 					//note order of operands; reversed;
-					//edited by Mike, 20260605
-					//------------------------------------------
-					//fAnswer = -parseFloat(operandOne)+parseFloat(operandTwo);
-
-					var iPlacesAfterDecimalPointOperandOne = getPlacesAfterDecimalPoint(operandOne);
-					var iPlacesAfterDecimalPointOperandTwo = getPlacesAfterDecimalPoint(operandTwo);
-					
-					if (iPlacesAfterDecimalPointOperandOne>iPlacesAfterDecimalPointOperandTwo) {
-						iPlacesAfterDecimalPoint = iPlacesAfterDecimalPointOperandOne;
-					}
-					else {
-						iPlacesAfterDecimalPoint = iPlacesAfterDecimalPointOperandTwo;
-					}
-				
-					var iPowerOfTen = 10 ** iPlacesAfterDecimalPoint;
-
-					fAnswer = (-parseFloat(operandOne*iPowerOfTen))+(parseFloat(operandTwo*iPowerOfTen));
-					
-					fAnswer = (fAnswer/(iPowerOfTen));
-					//------------------------------------------
-					
+					fAnswer = -parseFloat(operandOne)+parseFloat(operandTwo);
 					sAnswer = fAnswer.toString();
 					sCurrOperand=sAnswer;
 					arrayOperand.push(sCurrOperand);
