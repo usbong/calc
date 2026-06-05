@@ -1,8 +1,6 @@
 # Browser-based Calculator App
 
-Can you make use of your knowledge of HTML5 and Javascript to create a simple calculator app that runs on web browers?
-
-This is what I've been able to accomplish in four weeks using my available free time.<br/>
+Can you make use of your knowledge of HTML5 and Javascript to create a simple calculator app that runs on web browers?<br/>
 <br/>
 http://store.usbong.ph/server/calc/calc.html
 
@@ -183,7 +181,7 @@ instead of:<br/>
 
 <img src="https://github.com/usbong/calc/blob/main/screenshots/calcScreenshotV20260520T1514.png" width="50%">
 
-22. 20260522 (CURRENT); http://store.usbong.ph/server/calc/calc.html<br/>
+22. 20260522; http://store.usbong.ph/server/calc/calc20260522.html<br/>
 +fixed: `.-6` incorrectly results to `0` instead of `-6`, because `.` (not a number) is now set to `0`;<br/>
 +fixed: `.6*6` incorrectly results to `3.599...` instead of `3.6`;<br/>
 +fixed: `1.12*100` incorrectly results to `112.00000000000001`, instead of `112` by using `Math.round` after multiplying by the power of `10` raised to a specified number based on the input operands; didn't anymore use `Number.EPSILON` due to incorrect result if operand is `0`;<br/>
@@ -201,11 +199,20 @@ instead of:<br/>
 		<br/>
 		This is what I've been able to accomplish in four weeks using my available free time.<br/>
 		<br/>
-		http://store.usbong.ph/server/calc/calc.html
+		http://store.usbong.ph/server/calc/calc20260522.html
 		</h3>
 	</td>
   </tr>
 </table>
+
+## Additional Bug Fixes
+
+23. 20260605; http://store.usbong.ph/server/calc/calc.html<br/>
++updated: icon<br/>
++noted: use of `calcalphaicon20260605.png` instead of `calcalphaiconUpdated.png` causes error in the display of `×` and `÷`<br/>
++fixed: `4362.75 - 4019.80` results to `342.9499999` instead of `342.95`;<br/>
++fixed: `0.2 + 0.1` results to `0.300000000` instead of `0.3`; referencing Google AI Overview with question: "example binary representation accuracy with addition?"<br/>
++fixed: `.` cannot be entered when `CLEAR` is displayed instead of `BACKSPACE`<br/>
 
 # Get PhilNITS Certified!
 
