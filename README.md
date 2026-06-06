@@ -207,12 +207,16 @@ instead of:<br/>
 
 ## Additional Bug Fixes
 
-23. 20260605; http://store.usbong.ph/server/calc/calc.html<br/>
+23. 20260605; http://store.usbong.ph/server/calc/calc20260605.html<br/>
 +updated: icon<br/>
 +noted: use of `calcalphaicon20260605.png` instead of `calcalphaiconUpdated.png` causes error in the display of `×` and `÷`<br/>
 +fixed: `4362.75 - 4019.80` results to `342.9499999` instead of `342.95`;<br/>
 +fixed: `0.2 + 0.1` results to `0.300000000` instead of `0.3`; referencing Google AI Overview with question: "example binary representation accuracy with addition?"<br/>
 +fixed: `.` cannot be entered when `CLEAR` is displayed instead of `BACKSPACE`<br/>
+
+24. 20260606 (CURRENT); http://store.usbong.ph/server/calc/calc.html<br/>
++updated: icon to have a sense of height<br/>
++fixed: error that still occurs in the display of `×` and `÷` when accessing the app via the local network by further shortening the file name of the .png file; it's now `calcalphaicon3.png` instead of `calcalphaiconUpdated.png`<br/>
 
 # Get PhilNITS Certified!
 
