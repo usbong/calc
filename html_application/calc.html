@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20260606; from 20260605
+' @date updated: 20260608; from 20260606
 ' @website: www.usbong.ph
 '
 ' References: 
@@ -1079,7 +1079,10 @@
 				
 					var iPowerOfTen = 10 ** iPlacesAfterDecimalPoint;
 
-					fAnswer = (parseFloat(operandOne*iPowerOfTen))+(parseFloat(operandTwo*iPowerOfTen));
+					//edited by Mike, 20260608
+					//fAnswer = (parseFloat(operandOne*iPowerOfTen))+(parseFloat(operandTwo*iPowerOfTen));
+					
+					fAnswer = (parseFloat((operandOne*iPowerOfTen).toFixed(iPlacesAfterDecimalPoint)))+(parseFloat((operandTwo*iPowerOfTen).toFixed(iPlacesAfterDecimalPoint)));
 					
 					fAnswer = (fAnswer/(iPowerOfTen));
 					//------------------------------------------
@@ -1126,10 +1129,14 @@
 					}
 				
 					var iPowerOfTen = 10 ** iPlacesAfterDecimalPoint;
-
-					fAnswer = (-parseFloat(operandOne*iPowerOfTen))+(parseFloat(operandTwo*iPowerOfTen));
+					
+					//edited by Mike, 20260608
+					//fAnswer = (-parseFloat(operandOne*iPowerOfTen))+(parseFloat(operandTwo*iPowerOfTen));
+					
+					fAnswer = (-parseFloat((operandOne*iPowerOfTen)).toFixed(iPlacesAfterDecimalPoint))+(parseFloat((operandTwo*iPowerOfTen).toFixed(iPlacesAfterDecimalPoint)));
 					
 					fAnswer = (fAnswer/(iPowerOfTen));
+					
 					//------------------------------------------
 					
 					sAnswer = fAnswer.toString();
