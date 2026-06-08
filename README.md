@@ -214,9 +214,13 @@ instead of:<br/>
 +fixed: `0.2 + 0.1` results to `0.300000000` instead of `0.3`; referencing Google AI Overview with question: "example binary representation accuracy with addition?"<br/>
 +fixed: `.` cannot be entered when `CLEAR` is displayed instead of `BACKSPACE`<br/>
 
-24. 20260606 (CURRENT); http://store.usbong.ph/server/calc/calc.html<br/>
+24. 20260606; http://store.usbong.ph/server/calc/calc20260606.html<br/>
 +updated: icon to have a sense of height<br/>
 +fixed: error that still occurs in the display of `×` and `÷` when accessing the app via the local network by further shortening the file name of the .png file; it's now `calcalphaicon3.png` instead of `calcalphaiconUpdated.png`<br/>
+
+25. 20260608 (CURRENT); http://store.usbong.ph/server/calc/calc.html<br/>
++fixed: `4494.25 - 4367.35` results to `126.8999999` instead of `126.9` by using `toFixed(...)` to reduce the numbers after the decimal point based on the max that there are initially;<br/>
++updated: also addition operation accordingly to use `toFixed(...)`;<br/>
 
 # Get PhilNITS Certified!
 
