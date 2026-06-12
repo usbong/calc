@@ -218,9 +218,14 @@ instead of:<br/>
 +updated: icon to have a sense of height<br/>
 +fixed: error that still occurs in the display of `×` and `÷` when accessing the app via the local network by further shortening the file name of the .png file; it's now `calcalphaicon3.png` instead of `calcalphaiconUpdated.png`<br/>
 
-25. 20260608 (CURRENT); http://store.usbong.ph/server/calc/calc.html<br/>
+25. 20260608; http://store.usbong.ph/server/calc/calc20260608.html<br/>
 +fixed: `4494.25 - 4367.35` results to `126.8999999` instead of `126.9` by using `toFixed(...)` to reduce the numbers after the decimal point based on the max that there are initially;<br/>
 +updated: also addition operation accordingly to use `toFixed(...)`;<br/>
+
+26. 20260612 (CURRENT); http://store.usbong.ph/server/calc/calc.html<br/>
++updated: layout on Android to make it easier to press the buttons<br/>
+
+<img src="https://github.com/usbong/calc/blob/main/screenshots/calcScreenshotAndroidUpdatedLayout20260612.png" width="30%">
 
 # Get PhilNITS Certified!
 
