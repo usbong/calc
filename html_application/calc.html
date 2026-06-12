@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20260608; from 20260606
+' @date updated: 20260612; from 20260608
 ' @website: www.usbong.ph
 '
 ' References: 
@@ -429,6 +429,8 @@
 	
 	function onLoad() {
 		var answerInput = document.getElementById("answerInputId");
+		var backspaceButton = document.getElementById("backspaceButtonId");
+
 		answerInput.value="";
 		
 		//alert(navigator.userAgent);
@@ -467,6 +469,13 @@
 			}
 			//Android mobile
 			else {
+				//added by Mike, 20260612
+				//reference: Google AI Overview
+				document.body.style.transform = 'scale(2) translateY(50%)';
+
+				answerInput.style.transform = 'translateY(-120%)';
+				backspaceButton.style.transform = 'translateY(-120%)';
+				
 				answerInput.style.width = "240px";
 				answerInput.style.fontSize = "1.7rem"; //added by Mike, 20260522
 			}
